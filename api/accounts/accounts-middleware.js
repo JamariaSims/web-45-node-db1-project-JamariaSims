@@ -6,6 +6,12 @@ exports.logger = (req, res, next) => {
 };
 exports.checkAccountPayload = (req, res, next) => {
   // DO YOUR MAGIC
+  const { id, name, budget } = req.body;
+  if (!id || !name || !budget) {
+    next({ status: 400, message: `missing required fields` });
+  } else {
+    next();
+  }
 };
 
 exports.checkAccountNameUnique = (req, res, next) => {

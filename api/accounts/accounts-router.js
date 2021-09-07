@@ -18,9 +18,14 @@ router.get("/:id", logger, checkAccountId, async (req, res, next) => {
   res.status(200).json(req.account);
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   // DO YOUR MAGIC
-  
+  try {
+    const newAccount = await AccountModel.create(req.body);
+    res.status(201).json(newAccount);
+  } catch (error) {
+    next();
+  }
 });
 
 router.put("/:id", (req, res, next) => {
