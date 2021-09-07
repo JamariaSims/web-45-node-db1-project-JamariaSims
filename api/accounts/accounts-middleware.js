@@ -7,8 +7,12 @@ exports.logger = (req, res, next) => {
 exports.checkAccountPayload = (req, res, next) => {
   // DO YOUR MAGIC
   const { id, name, budget } = req.body;
-  if (!id || !name || !budget) {
-    next({ status: 400, message: `missing required fields` });
+  if (!name || !budget) {
+    next({ message: /name and budget are required/i });
+  } else if (name.match(/^-?\d+$/)) {
+    next({ message: /name of account must be a string/i });
+  } else if (budget instanceof Number) {
+    next({ message: /must be a number/i });
   } else {
     next();
   }

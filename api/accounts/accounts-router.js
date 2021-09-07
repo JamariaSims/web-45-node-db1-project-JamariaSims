@@ -20,8 +20,10 @@ router.get("/:id", logger, checkAccountId, async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   // DO YOUR MAGIC
+  const name = req.body.name;
+  const a = { ...req.body, ["name"]: name.trim() };
   try {
-    const newAccount = await AccountModel.create(req.body);
+    const newAccount = await AccountModel.create(a);
     res.status(201).json(newAccount);
   } catch (error) {
     next();
